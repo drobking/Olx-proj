@@ -51,9 +51,13 @@ export class Login extends Component {
         } else {
             switch (action) {
                 case LoginActions.Login:
-                    return (<div>Processing login</div>);
+                    return (<div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>);
                 case LoginActions.LoginCallback:
-                    return (<div>Processing login callback</div>);
+                    return (<div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>);
                 case LoginActions.Profile:
                 case LoginActions.Register:
                     return (<div></div>);
@@ -85,8 +89,6 @@ export class Login extends Component {
         const result = await authService.completeSignIn(url);
         switch (result.status) {
             case AuthenticationResultStatus.Redirect:
-                // There should not be any redirects as the only time completeSignIn finishes
-                // is when we are doing a redirect sign in flow.
                 throw new Error('Should not redirect.');
             case AuthenticationResultStatus.Success:
                 await this.navigateToReturnUrl(this.getReturnUrl(result.state));
@@ -119,15 +121,10 @@ export class Login extends Component {
 
     redirectToApiAuthorizationPath(apiAuthorizationPath) {
         const redirectUrl = `${window.location.origin}${apiAuthorizationPath}`;
-        // It's important that we do a replace here so that when the user hits the back arrow on the
-        // browser he gets sent back to where it was on the app instead of to an endpoint on this
-        // component.
         window.location.replace(redirectUrl);
     }
 
     navigateToReturnUrl(returnUrl) {
-        // It's important that we do a replace here so that we remove the callback uri with the
-        // fragment containing the tokens from the browser history.
         window.location.replace(returnUrl);
     }
 }

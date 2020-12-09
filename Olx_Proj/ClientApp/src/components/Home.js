@@ -11,7 +11,7 @@ export class Home extends Component {
       <input className="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search"/>
       <button type="button" className="btn bg-secondary text-white">Search</button>
     </div>
-    <CategoryMenu></CategoryMenu>
+          <CategoryMenu></CategoryMenu>
     </div>
     );
   }
